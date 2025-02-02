@@ -5,7 +5,7 @@ import { fetchMediaData } from '../data/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
-const ITEMS_PER_ROW = 10;
+const ITEMS_PER_ROW = 8;
 const ROW_HEIGHT = 300; // Approximate height of each row in pixels
 
 const MediaGrid: React.FC = () => {
