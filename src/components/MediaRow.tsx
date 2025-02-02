@@ -19,7 +19,7 @@ const MediaRow: React.FC<MediaRowProps> = ({ items, rowIndex, title, itemsPerRow
 
   return (
     <div className="flex flex-col no-scrollbar gap-4 mb-8">
-      <h4 className="text-white text-lg w-40">
+      <h4 className="text-white text-lg font-bold w-40">
         {title}
       </h4>
       <div className="flex gap-1 overflow-hidden transition-all duration-300 ease-in-out">

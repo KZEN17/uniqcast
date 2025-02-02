@@ -17,7 +17,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, position, isSelected }) => 
       className={`
         relative
         w-full
-        p-2
+        p-3
         transition-all
         duration-300
         ease-in-out
