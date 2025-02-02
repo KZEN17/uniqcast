@@ -5,7 +5,7 @@ import { fetchMediaData } from '../data/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
-const ITEMS_PER_ROW = 8;
+const ITEMS_PER_ROW = 10;
 const ROW_HEIGHT = 300; // Approximate height of each row in pixels
 
 const MediaGrid: React.FC = () => {
@@ -27,7 +27,7 @@ const MediaGrid: React.FC = () => {
     getData();
   }, []);
 
-
+  // Handle scrolling when selection changes
   useEffect(() => {
     if (containerRef.current) {
       const newScrollPosition = selectedPosition.row * ROW_HEIGHT;
@@ -50,7 +50,7 @@ const MediaGrid: React.FC = () => {
   return (
     <div 
       ref={containerRef}
-      className="py-8 ml-30 max-w-[90vw] h-screen overflow-y-auto"
+      className="py-8 ml-30 max-w-[90vw] h-screen overflow-y-auto no-scrollbar"
     >
       {rows.map((row, index) => (
         <MediaRow
