@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { MediaItem } from '../types';
 import MediaRow from './MediaRow';
 import { fetchMediaData } from '../data/api';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const ITEMS_PER_ROW = 8;
+const ROW_HEIGHT = 300; // Approximate height of each row in pixels
 
 const MediaGrid: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const selectedPosition = useSelector((state: RootState) => state.navigation.selectedPosition);
+  
   const [mediaData, setMediaData] = useState<{
     latest: MediaItem[];
     recommended: MediaItem[];
@@ -19,9 +24,19 @@ const MediaGrid: React.FC = () => {
       const data = await fetchMediaData();
       setMediaData(data);
     };
-
     getData();
   }, []);
+
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const newScrollPosition = selectedPosition.row * ROW_HEIGHT;
+      containerRef.current.scrollTo({
+        top: newScrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, [selectedPosition.row]);
 
   const { latest, recommended, tvPrograms, movies } = mediaData;
 
@@ -33,7 +48,10 @@ const MediaGrid: React.FC = () => {
   ];
 
   return (
-    <div className="py-8 ml-30 max-w-[90vw] h-full overflow-hidden">
+    <div 
+      ref={containerRef}
+      className="py-8 ml-30 max-w-[90vw] h-screen overflow-y-auto"
+    >
       {rows.map((row, index) => (
         <MediaRow
           key={row.title}

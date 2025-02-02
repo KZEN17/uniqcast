@@ -18,7 +18,10 @@ const MediaRow: React.FC<MediaRowProps> = ({ items, rowIndex, title, itemsPerRow
   });
 
   return (
-    <div className="flex flex-col no-scrollbar gap-4 mb-8">
+    <div 
+      className="flex flex-col no-scrollbar gap-4 mb-8"
+      data-row-index={rowIndex}
+    >
       <h4 className="text-white text-lg font-bold w-40">
         {title}
       </h4>
@@ -29,7 +32,6 @@ const MediaRow: React.FC<MediaRowProps> = ({ items, rowIndex, title, itemsPerRow
             item={item}
             position={{ row: rowIndex, column: virtualIndex }}
             isSelected={selectedIndex === virtualIndex}
-    
           />
         ))}
       </div>

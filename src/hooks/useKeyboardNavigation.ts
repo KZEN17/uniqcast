@@ -8,7 +8,7 @@ interface RowConfig {
   totalRows: number;
   totalItems: number;
 }
-// Custom hook to handle keyboard navigation
+
 export const useKeyboardNavigation = ({ itemsPerRow, totalRows, totalItems }: RowConfig) => {
   const dispatch = useDispatch();
   const selectedPosition = useSelector((state: RootState) => state.navigation.selectedPosition);
@@ -27,11 +27,21 @@ export const useKeyboardNavigation = ({ itemsPerRow, totalRows, totalItems }: Ro
         case 'ArrowUp':
           if (current.row > 0) {
             current.row -= 1;
+            // Find and scroll to the row
+            const rowElement = document.querySelector(`[data-row-index="${current.row}"]`);
+            if (rowElement) {
+              rowElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
           }
           break;
         case 'ArrowDown':
           if (current.row < totalRows - 1) {
             current.row += 1;
+            // Find and scroll to the row
+            const rowElement = document.querySelector(`[data-row-index="${current.row}"]`);
+            if (rowElement) {
+              rowElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
           }
           break;
         default:
@@ -40,7 +50,7 @@ export const useKeyboardNavigation = ({ itemsPerRow, totalRows, totalItems }: Ro
 
       dispatch(setSelectedPosition(current));
     };
-    // event listener for keydown events
+
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [selectedPosition, itemsPerRow, totalRows, totalItems, dispatch]);
